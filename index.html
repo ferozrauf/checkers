@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Competitors Chess Online</title>
+		<script src="jquery-1.11.3.js"></script>
+		<script type="text/javascript">
+$(document).ready(function() {
+  // define a generic Ajax error handler:
+  // http://api.jquery.com/ajaxerror/
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+  $("#createButton").click(function() {
+    $.ajax({
+      // The URL for the request -- note the simple REST API!
+      // all URLs are relative to http://localhost:3000/
+      url: "users/",
+      type: "POST",
+      dataType : "text", // this URL returns a plain text string, not JSON
+      data : { name: $("#nameBox").val(),
+               password: $("#passBox").val(),
+               email: $("#emailBox").val()
+             },
+      success: function( data ) {
+        console.log("You received some data!", data);
+        if (data == 'OK') {
+          $("#status").html("Successfully created a new user!");
+        } else {
+          $("#status").html("Error: could not create a new user!");
+        }
+      },
+    });
+  });
+  $("#loginButton").click(function() {
+    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+    // Using the core $.ajax() method
+    $.ajax({
+      // The URL for the request -- note the simple REST API!
+      // all URLs are relative to http://localhost:3000/
+      url: "users/" + $("#nameBox").val(),
+      type: "GET",
+      dataType : "json",
+      data: name: $("#nameBox").val(),
+            password: $("#passBox").val(),
+            email: $("#emailBox").val()
+                   }, // this URL returns data in JSON format
+      success: function( data ) {
+        console.log("You received some data!", data);
+        if (data.name) {
+        	location.href = localhost + "/game.html"
+        } else {
+          $("#status").html("Error: could not find user!");
+        }
+      },
+    });
+  });
+});
+</script>
+
+
+	</head>
+	<body>
+  		<h1>Welcome to Chess Online</h1>
+
+    	<p>
+    		Name: <input id="nameBox" type="text" size="20"/>
+    		Password: <input id="passBox" type="text" size="20"/>
+    		Email: <input id="emailBox" type="text" size="20"/>
+    	</p>
+
+    	<p>
+    		<button id="createButton">Create new user</button>
+    		<button id="loginButton">Login</button>
+    	</p>
+
+    <!-- empty placeholders -->
+    	<div id="nameDiv"></div>
+    	<div id="ageDiv"></div>
+    	<img id="profileImage" style="width: 300px;"/>
+
+    	<hr/>
+
+    	<div id="status"></div>
+  </body>
+
+
+</html>
