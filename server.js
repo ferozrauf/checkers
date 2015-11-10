@@ -1,5 +1,14 @@
-var app = require('express')(); // create a new Web app
-var http = require('http').Server(app); // start an http server
+var express = require('express'); // create a new Web app
+var app = express();
+// required to support parsing of POST request bodies
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+app.use(express.static(__dirname));
+
+
+
 var chessDatabase = [
   {name: 'Feroz',password: 'Cartoon4', email: 'frauf@u.rochester.edu',progress:''},
 ];
@@ -32,18 +41,19 @@ app.post('/users', function (req, res) {
 });
 
 app.get('/users/*', function (req, res) {
-  var nameToLookup = req.params[0];
-  var pass = req.body.password; // this matches the '*' part of '/users/*' above
+  var name = req.params[0];
+  // this matches the '*' part of '/users/*' above
   // try to look up in fakeDatabase
   for (var i = 0; i < chessDatabase.length; i++) {
     var e = chessDatabase[i];
-    if (e.name == nameToLookup && e.password == pass) {
+    if (e.name == name) {
       res.send(e);
       return; // return early!
     }
   }
   res.send('{}'); // failed, so return an empty JSON object!
 });
+var http = require('http').Server(app);
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });

@@ -40,16 +40,15 @@ $(document).ready(function() {
       url: "users/" + $("#nameBox").val(),
       type: "GET",
       dataType : "json",
-      data: name: $("#nameBox").val(),
-            password: $("#passBox").val(),
-            email: $("#emailBox").val()
-                   }, // this URL returns data in JSON format
       success: function( data ) {
-        console.log("You received some data!", data);
-        if (data.name) {
-        	location.href = localhost + "/game.html"
-        } else {
+        console.log("You received some data!", data.password);
+        if (data.password == $("#passBox").val()) {
+          $("#status").html("Loading Game!");
+        	window.location.href = "game.html"
+        } else if (!data.name){
           $("#status").html("Error: could not find user!");
+        } else {
+          $("#status").html("Wrong Password!");
         }
       },
     });
