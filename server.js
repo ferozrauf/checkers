@@ -35,13 +35,17 @@ app.post('/users', function (req, res) {
   }
   // otherwise add the user to the database by pushing (appending)
   // postBody to the fakeDatabase list
+  if(postBody.email.length<3)
+  {
+	postBody.email = "WHYYYYYYYYY!";
+  }
   chessDatabase.push(postBody);
 
   res.send('OK');
 });
 app.post('/save/*', function (req, res) {
   var postBody = req.body;
-  var name = req.params[0];
+  var name = postBody.name;
   var progress = postBody.progress;
   if (!name) {
     res.send('ERROR');

@@ -195,7 +195,7 @@ function resetBoard() {
 function processUser()
 {
 	var parameters = location.search.substring(1).split(/[&=]+/);
-	if(parameters.length>4)
+	if(parameters.length>1)
 	{
 		localStorage.setItem(parameters[0],parameters[1]);
 		localStorage.setItem(parameters[2],parameters[3]);
@@ -230,14 +230,12 @@ function startBoard()
 }
 function loadBoard()
 {
-	var progress = localStorage.getItem("progress");
-	//
-	if(progress.length<=2)
+	var progress = localStorage.progress;
+	if(progress.length<10)
 	{
 		startBoard();
 	} else {
 		progress = JSON.parse(progress);
-		console.log(progress);
 		for(var i=0;i<progress.length;i++)
 		{
 			b.cell(progress[i]).place(whitePieces[i]);

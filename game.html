@@ -31,7 +31,8 @@
 			document.getElementById("user").innerHTML = "Not logged in, fuck you";
 			location.href = "index.html";
 		}
-		loadBoard();
+		console.log(parameters);
+		loadBoard(parameters);
 		$("#logoutButton").click(function() {
 			var myProgress = localStorage.progress;
 			var myName = localStorage.name;
