@@ -5,17 +5,54 @@
 	<title>Competitors Chess Online</title>
     <style type='text/css'>
     	.green { background: lightgreen !important; }
-    </style>   
+		#user {
+			position: center; 
+			color: green;
+			border: 1px solid #dddddd;
+		}
+    </style>
+	
 </head>
 <body>
-  <table id='game'></table>1
+  
+  <h1 id='user' align='center'> 
+		This is a heading.!! 
+  </h1>
+  <table id='game' align='center' style='margin: 0px auto;'></table>
   <script src="jsboard.min.js"></script>
   <script src="jquery-1.11.3.js"></script>
   <script src="index.js"></script>
   <script type="text/javascript">
-  	$(document).ready(function() 
-  	{
-
-  	}
+    $(document).ready(function() {
+		var parameters = processUser();
+		if(parameters.length>4)
+			document.getElementById("user").innerHTML = parameters[parameters.indexOf("name")+1] + " is Logged In";
+		else {
+			document.getElementById("user").innerHTML = "Not logged in, fuck you";
+			location.href = "index.html";
+		}
+		loadBoard();
+		$("#logoutButton").click(function() {
+			var myProgress = localStorage.progress;
+			var myName = localStorage.name;
+			localStorage.clear();
+			$.ajax({
+					url: "save/" + myName,
+					type: "POST",
+					dataType : "json",
+					data : {
+						name:myName,
+						progress:myProgress
+					},
+			});
+		});
+	});
+	</script>
+  <div align='center'>
+		<input type='button' id='logoutButton' onClick="location.href='index.html'" value="Logout"> </button>
+		
+  </div>
+  
+	
 </body>
 </html>

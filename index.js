@@ -25,13 +25,6 @@ for (var i=0; i<8; i++)
     whitePieces.push(pawn.clone());
 
 // place pieces on board
-b.cell([7,1]).place(whitePieces[0]); b.cell([7,6]).place(whitePieces[1]);
-b.cell([7,2]).place(whitePieces[2]); b.cell([7,5]).place(whitePieces[3]);
-b.cell([7,0]).place(whitePieces[4]); b.cell([7,7]).place(whitePieces[5]);
-b.cell([7,3]).place(whitePieces[6]);
-b.cell([7,4]).place(whitePieces[7]);
-for (var i=8; i<whitePieces.length; i++) 
-    b.cell([6,i-8]).place(whitePieces[i]);
 
 // variables for piece to move and its locs
 var bindMoveLocs, bindMovePiece;
@@ -40,6 +33,14 @@ var bindMoveLocs, bindMovePiece;
 for (var i=0; i<whitePieces.length; i++) 
     whitePieces[i].addEventListener("click", function() { showMoves(this); });
 
+
+/*function loadBoard(var progress)
+{
+	
+
+
+
+}*/	
 // show new locations 
 function showMoves(piece) {
 
@@ -179,6 +180,7 @@ function movePiece() {
         b.cell(userClick).place(bindMovePiece);
         resetBoard();
     }
+	saveBoard();
 }
 
 // remove previous green spaces and event listeners
@@ -190,3 +192,66 @@ function resetBoard() {
         }
     }
 }
+function processUser()
+{
+	var parameters = location.search.substring(1).split(/[&=]+/);
+	if(parameters.length>4)
+	{
+		localStorage.setItem(parameters[0],parameters[1]);
+		localStorage.setItem(parameters[2],parameters[3]);
+		localStorage.setItem(parameters[4],parameters[5]);
+	} else if(localStorage.getItem("name")!=null){
+		parameters[0] = "name";
+		parameters[2] = "email";
+		parameters[4] = "progress";
+		parameters[1] = localStorage.getItem(parameters[0]);
+		parameters[3] = localStorage.getItem(parameters[2]);
+		parameters[5] = localStorage.getItem(parameters[4]);
+	}
+	return parameters;
+}
+function startBoard()
+{
+	var prog = new Array();
+	b.cell([7,1]).place(whitePieces[0]); prog[0] = [7,1];
+	b.cell([7,6]).place(whitePieces[1]); prog[1] = [7,6];
+	b.cell([7,2]).place(whitePieces[2]); prog[2] = [7,2];
+	b.cell([7,5]).place(whitePieces[3]); prog[3] = [7,5]; 
+	b.cell([7,0]).place(whitePieces[4]); prog[4] = [7,0];
+	b.cell([7,7]).place(whitePieces[5]); prog[5] = [7,7];
+	b.cell([7,3]).place(whitePieces[6]); prog[6] = [7,3];
+	b.cell([7,4]).place(whitePieces[7]); prog[7] = [7,4]
+	for (var i=8; i<whitePieces.length; i++) 
+	{
+		b.cell([6,i-8]).place(whitePieces[i]);
+		prog[i] = [6,i-8];
+	}
+	localStorage.setItem("progress",JSON.stringify(prog));
+}
+function loadBoard()
+{
+	var progress = localStorage.getItem("progress");
+	//
+	if(progress.length<=2)
+	{
+		startBoard();
+	} else {
+		progress = JSON.parse(progress);
+		console.log(progress);
+		for(var i=0;i<progress.length;i++)
+		{
+			b.cell(progress[i]).place(whitePieces[i]);
+		}
+	}
+}
+function saveBoard()
+{
+	var prog = new Array();
+	for(var i=0;i<whitePieces.length;i++)
+	{
+		prog[i] = b.cell(whitePieces[i].parentNode).where();
+	}
+	localStorage.setItem("progress",JSON.stringify(prog));
+}
+
+ 

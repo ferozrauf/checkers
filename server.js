@@ -39,6 +39,25 @@ app.post('/users', function (req, res) {
 
   res.send('OK');
 });
+app.post('/save/*', function (req, res) {
+  var postBody = req.body;
+  var name = req.params[0];
+  var progress = postBody.progress;
+  if (!name) {
+    res.send('ERROR');
+    return; // return early!
+  }
+  // check if user's name is already in database; if so, send an error
+  for (var i = 0; i < chessDatabase.length; i++) {
+    var e = chessDatabase[i];
+    if (e.name == name) {
+		e.progress = progress;
+		res.send('OK');
+		return; // return early!
+    }
+  }
+  res.send('ERROR');
+});
 
 app.get('/users/*', function (req, res) {
   var name = req.params[0];
