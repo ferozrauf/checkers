@@ -10,6 +10,15 @@ var queen  = jsboard.piece({text:"WQ", textIndent:"-9999px", background:"url('im
 var king   = jsboard.piece({text:"WG", textIndent:"-9999px", background:"url('images/chess/king.png') no-repeat", width:"50px", height:"50px", margin:"0 auto" });
 var pawn   = jsboard.piece({text:"WP", textIndent:"-9999px", background:"url('images/chess/pawn.png') no-repeat", width:"50px", height:"50px", margin:"0 auto" });
 
+/*
+
+var bkknight = jsboard.piece({text:"WK", textIndent:"-9999px", background:"url('images/chess/knight.png') no-repeat", width:"50px", height:"50px", margin:"0 auto", color:black});
+var bkbishop = jsboard.piece({text:"WB", textIndent:"-9999px", background:"url('images/chess/bishop.png') no-repeat", width:"50px", height:"50px", margin:"0 auto",color:black});
+var bkrook   = jsboard.piece({text:"WR", textIndent:"-9999px", background:"url('images/chess/rook.png') no-repeat", width:"50px", height:"50px", margin:"0 auto",color:black});
+var bkqueen  = jsboard.piece({text:"WQ", textIndent:"-9999px", background:"url('images/chess/queen.png') no-repeat", width:"50px", height:"50px", margin:"0 auto",color:black});
+var bkking   = jsboard.piece({text:"WG", textIndent:"-9999px", background:"url('images/chess/king.png') no-repeat", width:"50px", height:"50px", margin:"0 auto" ,color:black});
+var bkpawn   = jsboard.piece({text:"WP", textIndent:"-9999px", background:"url('images/chess/pawn.png') no-repeat", width:"50px", height:"50px", margin:"0 auto",color:black});
+*/
 // create pieces to place in DOM
 var whitePieces = [
     knight.clone(),
@@ -20,10 +29,23 @@ var whitePieces = [
     rook.clone(),
     queen.clone(),
     king.clone()
-];
+];/*
+var blackPieces = [
+	bkknight.clone(),
+    bkknight.clone(),
+    bkbishop.clone(),
+    bkbishop.clone(),
+    bkrook.clone(),
+    bkrook.clone(),
+    bkqueen.clone(),
+    bkking.clone()
+
+];*/
 for (var i=0; i<8; i++) 
     whitePieces.push(pawn.clone());
-
+/*for (var i=0; i<8; i++) 
+    blackPieces.push(bkpawn.clone());
+*/
 // place pieces on board
 
 // variables for piece to move and its locs
@@ -227,6 +249,7 @@ function startBoard()
 		prog[i] = [6,i-8];
 	}
 	localStorage.setItem("progress",JSON.stringify(prog));
+	//b.cell([0,0]).place(blackPieces[0]);
 }
 function loadBoard()
 {
