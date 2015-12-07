@@ -29,6 +29,7 @@ app.post('/users', function (req, res) {
   for (var i = 0; i < chessDatabase.length; i++) {
     var e = chessDatabase[i];
     if (e.name == myName) {
+
       res.send('ERROR');
       return; // return early!
     }
@@ -58,6 +59,25 @@ app.post('/save/*', function (req, res) {
 		e.progress = progress;
 		res.send('OK');
 		return; // return early!
+    }
+  }
+  res.send('ERROR');
+});
+app.post('/delete/*', function (req, res) {
+  var postBody = req.body;
+  var name = postBody.name;
+  var progress = postBody.progress;
+  if (!name) {
+    res.send('ERROR');
+    return; // return early!
+  }
+  // check if user's name is already in database; if so, send an error
+  for (var i = 0; i < chessDatabase.length; i++) {
+    var e = chessDatabase[i];
+    if (e.name == name) {
+      chessDatabase.splice(i,1);
+      res.send('OK');
+    return; // return early!
     }
   }
   res.send('ERROR');
