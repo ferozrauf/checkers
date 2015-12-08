@@ -1,3 +1,37 @@
-body{ background-color: gray}
-h1{}
-h2{ color: blue;}
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333333;
+	background: radial-gradient(red,black);
+}
+h2 { margin: 0; }
+h1{
+	font-size: 40px;
+	color: white;
+}
+figure { 
+	border: 1px solid #333333;
+	width: 204px;
+	padding: 5px;
+	text-align: center;
+}
+figcaption { 
+	display: block;
+	font-size: 10px;
+	font-style: italic;
+	color: white;
+}
+.container {
+	margin:  auto;
+	width: 80%;
+	max-width: 960px;
+	min-width: 320px;
+	border-collapse: collapse;
+}
+.container img {
+	width: 204px;
+	height: auto;
+}
+table, td, tr{
+	display: block;
+	margin-left: 10px;
+}

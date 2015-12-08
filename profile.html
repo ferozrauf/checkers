@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<link rel="stylesheet" type"text/css" href="mystyle.css">
-	</head>
+	<link rel="stylesheet" href="mystyle.css">
+	<title>User Profiles</title>
+	<script src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		document.getElementById("profile").innerHTML = "Welcome to Chess Online's user portal!";
+  // define a generic Ajax error handler:
+  // http://api.jquery.com/ajaxerror/
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+
+  });
+  $("#deleteButton").click(function() {
+    $.ajax({
+      // The URL for the request -- note the simple REST API!
+      // all URLs are relative to http://localhost:3000/
+      url: "delete/" + localStorage.name,
+      type: "POST",
+      dataType : "text", // this URL returns a plain text string, not JSON
+      data : { name: localStorage.name
+             },
+      success: function( data ) {
+        console.log("You successfully deleted the user profile!", data);
+        if (data == 'OK') {
+			localStorage.clear();
+        	location.href = "index.html"
+        }
+      }
+    });
+  });
+});
+</script>
+</head>
+	<div class="container">
 	<body>
-		<h1>UR Chess User Portal</h1>
-
-		<script>
-		var username = "Feroz";
-		</script>
-
-		<h2><script>document.write(username)</script></h2>
-		<!-- have this image change depending on what picture the user pre-selected -->
-		<img id="profileImage" src="images/userpics/kitten.jpeg" style="width: 300px;"/>
+	<h1 id="profile">This is a placeholder</h1>
+	<figure>
+		<img src = "images/userpics/kitten.jpeg" alt ="usercat" ID = "usercat">
+		<figcaption>Welcome insert username here!</figcaption>
+	</figure>
+	<table>
+		<tr>
+			<td><button ID = "edit">Edit Profile</button></td>
+		</tr>
+		<tr>
+			<td><button ID = "delete">Delete Profile</button></td>
+		</tr>
+		<tr>
+			<td><button ID = "play">Play game</button></td>
+		</tr>
+	</table>
+	</div>
  	</body>
 </html>
