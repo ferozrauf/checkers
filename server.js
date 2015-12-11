@@ -10,7 +10,7 @@ app.use(express.static(__dirname));
 
 
 var chessDatabase = [
-  {name: 'Feroz',password: 'Cartoon4', email: 'frauf@u.rochester.edu',progress:''},
+  {name: 'Feroz',password: 'Cartoon4', email: 'frauf@u.rochester.edu',progress:'',against:''},
 ];
 
 
@@ -34,11 +34,12 @@ app.post('/users', function (req, res) {
       return; // return early!
     }
   }
+  postBody.against = '';
   // otherwise add the user to the database by pushing (appending)
   // postBody to the fakeDatabase list
   if(postBody.email.length<3)
   {
-	postBody.email = "WHYYYYYYYYY!";
+	 postBody.email = "WHYYYYYYYYY!";
   }
   chessDatabase.push(postBody);
 
@@ -82,7 +83,25 @@ app.post('/delete/*', function (req, res) {
   }
   res.send('ERROR');
 });
+app.get('/challenge/*', function (req, res) {
+  var name = req.params[0];
+  if (!name) {
+    res.send('ERROR');
+    return; // return early!
+  }
+  // check if user's name is already in database; if so, send an error
+  for (var i = 0; i < chessDatabase.length; i++) {
+    var e = chessDatabase[i];
+    if (e.against == name) {
+      if(e.against.length>0)
+      {
 
+      }
+      return; 
+    }
+  }
+  res.send('ERROR');
+});
 app.get('/users/*', function (req, res) {
   var name = req.params[0];
   // this matches the '*' part of '/users/*' above
